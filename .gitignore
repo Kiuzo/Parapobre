@@ -1,8 +1,8 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+# =====================================================
+# Dependencies
+# =====================================================
+node_modules/
+.pnp/
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -10,32 +10,69 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# =====================================================
+# Build / Output
+# =====================================================
+.next/
+out/
+build/
+dist/
+coverage/
 
-# next.js
-/.next/
-/out/
+# =====================================================
+# Environment Variables (NUNCA subir por padrão)
+# =====================================================
+.env
+.env.*
+!.env.example
 
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# =====================================================
+# Logs
+# =====================================================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
+*.log
 
-# env files (can opt-in for committing if needed)
-.env*
+# =====================================================
+# OS / Editor
+# =====================================================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+!.vscode/extensions.json
 
-# vercel
-.vercel
+# =====================================================
+# Certificates / Keys
+# =====================================================
+*.pem
+*.key
+*.crt
 
-# typescript
+# =====================================================
+# Vercel
+# =====================================================
+.vercel/
+
+# =====================================================
+# TypeScript
+# =====================================================
 *.tsbuildinfo
 next-env.d.ts
+
+# =====================================================
+# Cache / Temporary
+# =====================================================
+.cache/
+.tmp/
+temp/
+
+# =====================================================
+# Misc
+# =====================================================
+*.tgz
+*.bak
