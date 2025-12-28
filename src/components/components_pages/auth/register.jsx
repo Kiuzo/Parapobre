@@ -5,7 +5,7 @@ export default function RegisterComponent() {
                 <div class="w-full max-w-md bg-black/70 px-16 py-16 shadow-md rounded-xl">
 
                     <h1 class="text-4xl md:text-5xl font-bold text-center mb-2">
-                        Paramonte
+                        Parapobre
                     </h1>
 
                     <div class="border-2 mb-8"></div>
