@@ -14,7 +14,7 @@
 
 ---
 
-## � Table of Contents
+## 🧭 Table of Contents
 
 - [Overview](#overview)
 - [Tech Stack](#tech-stack)
@@ -35,7 +35,7 @@
 
 - **⚡ Zero Latency Navigation**: Instant page transitions powered by Next.js routing.
 - **🎨 Premium UI/UX**: Cinematic dark mode interface with glassmorphism effects.
-- **� Fully Responsive**: Optimized for desktops, tablets, and mobile devices.
+- **📱 Fully Responsive**: Optimized for desktops, tablets, and mobile devices.
 - **🔒 Privacy Focused**: No user tracking or external analytics.
 
 ---
@@ -90,7 +90,7 @@
 <td>One-click save to your personal library (Local Storage persistence).</td>
 </tr>
 <tr>
-<td><strong>�️ Genre Filtering</strong></td>
+<td><strong>🎭️ Genre Filtering</strong></td>
 <td>Quickly filter content by categories like Action, Horror, Comedy, etc.</td>
 </tr>
 <tr>
@@ -185,5 +185,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
     </td>
   </tr>
 </table>
+
+  <br>
+  
+  [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Kiuzo)
   
 </div>

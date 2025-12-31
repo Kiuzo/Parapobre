@@ -1,13 +1,20 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 
 export default function Sidebar() {
     const router = useRouter();
     const currentPath = router.pathname;
+    const { signOut } = useAuth();
 
     const isActive = (path) => {
         // Simple check
         return currentPath.includes(path);
+    };
+
+    const handleLogout = async () => {
+        await signOut();
+        router.push('/auth/login');
     };
 
     const activeClass = "flex items-center gap-4 border-l-2 border-red-600 bg-linear-to-r from-red-600/20 to-transparent px-4 py-3 font-medium text-red-500 transition-all";
@@ -18,7 +25,7 @@ export default function Sidebar() {
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></link>
             <div className="p-8">
                 <a href="#" className="flex items-center gap-2">
-                    <span className="text-xl font-black italic tracking-tighter uppercase">Paramonte</span>
+                    <span className="text-xl font-black italic tracking-tighter uppercase">Parapobre</span>
                 </a>
             </div>
 
@@ -37,12 +44,20 @@ export default function Sidebar() {
                         <span className="text-sm">Favorites</span>
                     </Link>
                 </div>
+
+                <div className="pt-8">
+                    <p className="mb-4 px-4 text-[10px] font-semibold tracking-widest text-gray-500 uppercase">User</p>
+                    <Link href="./profile" className={isActive('profile') ? activeClass : inactiveClass}>
+                        <i className="fas fa-user text-lg"></i>
+                        <span className="text-sm">Profile</span>
+                    </Link>
+                </div>
             </nav>
 
             <div className="border-t border-white/5 p-4">
-                <button className="flex w-full items-center gap-3 rounded-xl p-3 text-gray-400 transition-all hover:bg-red-500/10 hover:text-red-500">
+                <button onClick={handleLogout} className="flex w-full items-center gap-3 rounded-xl p-3 text-gray-400 transition-all hover:bg-red-500/10 hover:text-red-500">
                     <i className="fas fa-arrow-right-from-bracket"></i>
-                    <a href="../" className="text-sm font-medium">Logout</a>
+                    <span className="text-sm font-medium">Logout</span>
                 </button>
             </div>
         </aside>
