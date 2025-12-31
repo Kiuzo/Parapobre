@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { supabase } from '../lib/supabase';
+import { useAuth } from '../context/AuthContext';
 
 const APIKEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
 const URL_API = 'https://api.themoviedb.org/3';
@@ -17,43 +19,75 @@ const GENRE_IDS = {
 };
 
 export function useMovies() {
+    const { user } = useAuth();
     const [movies, setMovies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [favorites, setFavorites] = useState([]);
 
-    // Initialize favorites from localStorage
+    // Initialize favorites from Supabase
     useEffect(() => {
-        const storedFavorites = localStorage.getItem('movieFavorites');
-        if (storedFavorites) {
-            setFavorites(JSON.parse(storedFavorites));
-        }
-        // Load initial popular movies
-        getPopularMovies();
-    }, []);
+        const fetchFavorites = async () => {
+            if (!user) {
+                setFavorites([]);
+                return;
+            }
 
-    const saveFavorites = (newFavorites) => {
-        setFavorites(newFavorites);
-        localStorage.setItem('movieFavorites', JSON.stringify(newFavorites));
-        window.dispatchEvent(new Event('favoritesUpdated'));
-    };
+            try {
+                const { data, error } = await supabase
+                    .from('favorites')
+                    .select('movie_data')
+                    .eq('user_id', user.id);
+
+                if (error) throw error;
+                if (data) {
+                    setFavorites(data.map(item => item.movie_data));
+                }
+            } catch (err) {
+                console.error('Error fetching favorites:', err);
+            }
+        };
+
+        fetchFavorites();
+        getPopularMovies();
+    }, [user]);
 
     const isFavorite = (movieId) => {
         return favorites.some(fav => fav.id === movieId);
     };
 
     const toggleFavorite = async (movie) => {
-        const index = favorites.findIndex(fav => fav.id === movie.id);
-        let newFavorites = [...favorites];
+        if (!user) return;
 
-        if (index > -1) {
-            // Remove
-            newFavorites.splice(index, 1);
-        } else {
-            //add
-            newFavorites.push(movie);
+        const isFav = isFavorite(movie.id);
+
+        try {
+            if (isFav) {
+                // Remove
+                const { error } = await supabase
+                    .from('favorites')
+                    .delete()
+                    .eq('user_id', user.id)
+                    .eq('movie_id', movie.id);
+
+                if (error) throw error;
+                setFavorites(prev => prev.filter(fav => fav.id !== movie.id));
+            } else {
+                // Add
+                const { error } = await supabase
+                    .from('favorites')
+                    .insert({
+                        user_id: user.id,
+                        movie_id: movie.id,
+                        movie_data: movie
+                    });
+
+                if (error) throw error;
+                setFavorites(prev => [...prev, movie]);
+            }
+        } catch (err) {
+            console.error('Error toggling favorite:', err);
         }
-        saveFavorites(newFavorites);
     };
 
     const getPopularMovies = async () => {

@@ -21,8 +21,6 @@
 - [Key Features](#key-features)
 - [Screenshots](#screenshots)
 - [Installation](#installation)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
